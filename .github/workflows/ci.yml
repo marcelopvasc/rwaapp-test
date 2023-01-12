@@ -8,7 +8,7 @@ jobs:
         uses: actions/checkout@v3
         with:
               node-version: 19.4.0
-        config-file: cypress.config.js
+      
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
