@@ -9,16 +9,16 @@ describe('User sign up and login', () => {
     context('Positive scenarios', () => {
       it('should login successful', function () {
         cy.get('#username')
-          .type(Cypress.env('username'))
+          .type(Cypress.env('username'), { log: false })
         cy.get('#password')
-          .type(Cypress.env('userpwd'))
+          .type(Cypress.env('userpwd'), { log: false })
         cy.get("button[data-test='signin-submit']").click()
         cy.get('h6[data-test="sidenav-username"]')
         cy.should('be.visible')
           .and('contain', '@Allie2')
       })
 
-      it.only('should open sign up form', function () {
+      it('should open sign up form', function () {
         cy.get("[data-test='signup']").click()
         cy.get('[data-test="signup-title"]')
         cy.should('be.visible')
