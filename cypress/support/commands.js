@@ -1,3 +1,6 @@
+/* eslint-disable no-sequences */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-undef */
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -11,6 +14,12 @@
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
+Cypress.Commands.add('fillMandatoryLoginFields', (username, password) => {
+  cy.get(Cypress.env('login_page_identifiers').username_field)
+    .type(username, { log: false })
+  cy.get(Cypress.env('login_page_identifiers').userpwd_field)
+    .type(password, { log: false })
+})
 //
 //
 // -- This is a child command --

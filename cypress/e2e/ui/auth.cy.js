@@ -5,15 +5,12 @@ describe('User sign up and login', () => {
   beforeEach(() => {
     cy.visit(Cypress.env('baseurl'))
   })
-  context('Hitting the real api', () => {
+  context('[Smoke Test] Hitting the real api', () => {
     context('Positive scenarios', () => {
-      it('should login successful', function () {
-        cy.get('#username')
-          .type(Cypress.env('username'), { log: false })
-        cy.get('#password')
-          .type(Cypress.env('userpwd'), { log: false })
-        cy.get("button[data-test='signin-submit']").click()
-        cy.get('h6[data-test="sidenav-username"]')
+      it.only('should login successful', function () {
+        cy.fillMandatoryLoginFields(Cypress.env('login_credentials').username, Cypress.env('login_credentials').userpwd)
+        cy.get(Cypress.env('login_page_identifiers').login_button).click()
+        cy.get(Cypress.env('home_page_identifiers').sidenav_username)
         cy.should('be.visible')
           .and('contain', '@Allie2')
       })
@@ -28,10 +25,7 @@ describe('User sign up and login', () => {
 
     context('Negative scenarios', () => {
       it('should not be able to login with wrong credentials', function () {
-        cy.get('#username')
-          .type('aaaaaa')
-        cy.get('#password')
-          .type('bbbbbbb')
+        cy.fillMandatoryLoginFields('sfsdfdfdsfds', 'sdfsdfsfsdfds')
         cy.get("button[data-test='signin-submit']").click()
         cy.get('div[data-test="signin-error"]')
         cy.should('be.visible')
