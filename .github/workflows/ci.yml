@@ -5,7 +5,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+              node-version: 19.4.0
+        config-file: cypress.config.js
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
