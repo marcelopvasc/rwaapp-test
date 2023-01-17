@@ -3,11 +3,18 @@
 
 describe('User sign up and login', () => {
   beforeEach(() => {
-    cy.visit(Cypress.env('baseurl'))
+    cy.intercept({
+      method: 'GET',
+      pathname: '**/signin'
+
+    }).as('getLoginPage')
+
+    cy.visit(Cypress.env('login_url'))
+    cy.wait('@getLoginPage')
   })
   context('[Smoke Test] Hitting the real api', () => {
     context('Positive scenarios', () => {
-      it.only('should login successful', function () {
+      it('should login successful', function () {
         cy.fillMandatoryLoginFields(Cypress.env('login_credentials').username, Cypress.env('login_credentials').userpwd)
         cy.get(Cypress.env('login_page_identifiers').login_button).click()
         cy.get(Cypress.env('home_page_identifiers').sidenav_username)
