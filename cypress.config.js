@@ -1,6 +1,7 @@
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
+  projectId: 'nqf517',
   env: {
     login_url: 'http://localhost:3000/signin'
   },

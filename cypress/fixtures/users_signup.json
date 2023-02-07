@@ -1,0 +1,21 @@
+[
+  {
+    "test_name": "sig up successful",
+    "firstname": "Marcelo",
+    "lastname": "Vasconcelos",
+    "username": "marcelopv",
+    "password": "s3cret",
+    "conf_password": "s3cret",
+    "result": "#username"
+  },
+  {
+    "test_name": "password less than 4 characters",
+    "firstname": "Joe",
+    "lastname": "Bilb",
+    "username": "joebilb",
+    "password": "s3c",
+    "conf_password": "s3c",
+    "result": "#firstName"
+  }
+
+]

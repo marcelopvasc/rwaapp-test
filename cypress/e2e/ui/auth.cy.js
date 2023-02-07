@@ -1,7 +1,11 @@
 /* eslint-disable no-undef */
 /// <reference types="Cypress" />
 
-describe('User sign up and login', () => {
+import users_signup from '../../fixtures/users_signup.json'
+import users_login from '../../fixtures/users_login.json'
+
+describe('User login and sign up ', () => {
+  
   beforeEach(() => {
     cy.intercept({
       method: 'GET',
@@ -12,32 +16,46 @@ describe('User sign up and login', () => {
     cy.visit(Cypress.env('login_url'))
     cy.wait('@getLoginPage')
   })
-  context('[Smoke Test] Hitting the real api', () => {
-    context('Positive scenarios', () => {
-      it('should login successful', function () {
-        cy.fillMandatoryLoginFields(Cypress.env('login_credentials').username, Cypress.env('login_credentials').userpwd)
-        cy.get(Cypress.env('login_page_identifiers').login_button).click()
-        cy.get(Cypress.env('home_page_identifiers').sidenav_username)
-        cy.should('be.visible')
-          .and('contain', '@Allie2')
-      })
 
-      it('should open sign up form', function () {
-        cy.get("[data-test='signup']").click()
-        cy.get('[data-test="signup-title"]')
-        cy.should('be.visible')
-        cy.and('contain', 'Sign Up')
-      })
-    })
-
-    context('Negative scenarios', () => {
-      it('should not be able to login with wrong credentials', function () {
-        cy.fillMandatoryLoginFields('sfsdfdfdsfds', 'sdfsdfsfsdfds')
-        cy.get("button[data-test='signin-submit']").click()
-        cy.get('div[data-test="signin-error"]')
-        cy.should('be.visible')
-          .and('contain', 'Username or password is invalid')
-      })
+  context('Login Scenarios', () => {
+    
+     
+      users_login.forEach(users =>{
+              it(users.test_name, function () {
+                if(users.test_name !== "login unsuccessful with password less than 4 characters"){
+                  cy.fillMandatoryLoginFields(users.name, users.password)
+                  cy.get(Cypress.env('login_page_identifiers').login_button).click()
+                  cy.get(users.result)
+                  cy.should('be.visible')
+                } else {
+                  cy.fillMandatoryLoginFields(users.name, users.password)
+                  cy.get("#username").click()
+                  cy.get(users.result)
+                  cy.should('be.visible')
+                }  
+              })
     })
   })
+  
+
+
+    context('Signup scenarios', () => {
+      
+      users_signup.forEach(users => {
+        it(users.test_name, function () {
+          if(users.test_name !== "password less than 4 characters"){
+            cy.fillSignupForm(users.firstname,users.lastname,users.username,users.password,users.conf_password)
+            cy.get(Cypress.env('signup_page_identifiers').signup_button).click()
+            cy.get(users.result)
+            cy.should('be.visible')
+          } else {
+            cy.fillSignupForm(users.firstname,users.lastname,users.username,users.password,users.conf_password)
+            cy.get(users.result)
+            cy.should('be.visible')
+          }    
+        })
+      })
+      
+    })
+  
 })

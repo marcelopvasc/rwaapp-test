@@ -1,0 +1,21 @@
+[
+  {
+    "test_name": "login successful",
+    "name": "Allie2",
+    "password": "s3cret",
+    "result": "[data-test='sidenav-username']"  
+  },
+  {
+    "test_name": "login unsuccessful with wrong credentials",
+    "name": "Jackson",
+    "password": "s3cc",
+    "result": "[data-test='signin-error']"  
+  },
+  {
+    "test_name": "login unsuccessful with password less than 4 characters",
+    "name": "Password3words",
+    "password": "s3c",
+    "result": "#password-helper-text"  
+  }
+
+]
